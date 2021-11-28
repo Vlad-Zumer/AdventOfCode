@@ -4,3 +4,6 @@ removeFirstFromList x [] = []
 removeFirstFromList x (y:ys) = if x == y then ys else ([y] ++ (removeFirstFromList x ys)) 
 
 ans = [(x*y*z) | x <- inputArr, y <- (removeFirstFromList x inputArr), z <- (removeFirstFromList y (removeFirstFromList x inputArr)), (x+y+z) == 2020]
+
+main :: IO()
+main = print (ans !! 1)
