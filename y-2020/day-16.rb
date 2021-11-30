@@ -358,7 +358,7 @@ end
 # puts parse_all_Id_lines(setIdsIn)
 
 # puts solve_1(testSetIdsIn, testNearbyTickets)
-# puts solve_1(setIdsIn, nearbyTickets)
+puts solve_1(setIdsIn, nearbyTickets)
 
 # puts solve_2(testSetIdsIn, testMyTicket, testNearbyTickets)
 puts solve_2(setIdsIn, myTicket, nearbyTickets)
