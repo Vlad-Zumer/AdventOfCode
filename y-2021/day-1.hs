@@ -2,7 +2,7 @@
 main :: IO()
 main = do
     print (length (filter (>0) (zipWith (-) (tail input) input)))
-    let windows = zipWith (+) (zipWith (+) input (tail input)) $ (tail . tail $ input)
+    let windows = zipWith (+) (zipWith (+) input (tail input)) (tail . tail $ input)
     print . length . filter (>0) . zipWith (-) (tail windows) $ windows
 
 input::[Int]
