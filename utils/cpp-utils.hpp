@@ -189,6 +189,28 @@ namespace Utils
         return retVal;
     }
 
+    template<typename A, typename B>
+    vector<pair<A,B>> vZip(const vector<A> as, const vector<B> bs)
+    {
+        vector<pair<A,B>> ret;
+        for (size_t i = 0; i < as.size() && i < bs.size(); i++)
+        {
+            ret.push_back({as[i],bs[i]});
+        }
+    }
+
+    vector<long long> vRangeIncl(long long start, long long end)
+    {
+        assert(start < end);
+        
+        vector<long long> ret;
+        for (long long i = start; i <= end ; i++)
+        {
+            ret.push_back(i);
+        }
+        return ret;
+    }
+
     bool isEmptyStr(const string s)
     {
         return s.size() == 0;
