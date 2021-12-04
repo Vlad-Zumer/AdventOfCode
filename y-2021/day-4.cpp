@@ -56,13 +56,10 @@ typedef struct Board
 
             won = true;
             cellsToCheck = getBoardColumn(i);
-            // cout<<"COL "<<i<<" : ";
             for (size_t j = 0; j < cellsToCheck.size(); j++)
             {
-                // cout<<cellsToCheck[j]<<", ";
                 won &=  cellsToCheck[j].seen;
             }
-            // cout<<endl;
 
             if(won)
             {
@@ -174,7 +171,6 @@ int main()
     size_t lastBoardId = 0;
     while (getline(inFile,boardLine))
     {
-        // cout<<"\""<<boardLine<< "\" - b: "<<lastBoardId<<endl;
         if(boardLine == "")
         {
             lastBoardId++;
