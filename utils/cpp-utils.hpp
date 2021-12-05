@@ -1,5 +1,5 @@
-#ifndef CPP_SNIPPETS
-#define CPP_SNIPPETS
+#ifndef CPP_VZ_UTILS
+#define CPP_VZ_UTILS
 
 #include<string>
 #include<vector>
@@ -7,6 +7,7 @@
 #include<map>
 #include<unordered_map>
 #include<functional>
+#include<ctype.h>
 
 namespace Utils
 {
@@ -38,6 +39,33 @@ namespace Utils
         retVal.push_back(tmp);
 
         return retVal;
+    }
+
+    string str_trim(const string str)
+    {
+        size_t begin = 0, end = str.size()-1;
+
+        while (begin < str.size() && isspace(str[begin]))
+        {
+            begin++;
+        }
+
+        if (begin == str.size())
+        {
+            return "";
+        }
+
+        while (end > 0 && end > begin && isspace(str[end]))
+        {
+            end--;
+        }
+
+        if (end == 0)
+        {
+            return "";
+        }
+
+        return str.substr(begin,end-begin+1);
     }
 
     template<typename A>
