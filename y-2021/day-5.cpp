@@ -41,12 +41,12 @@ Board makeBoard(int MaxX, int MaxY)
 
 int gcd(int a, int b) {
    
-   if (b == 0)
-   {
-    return a;
-   }
+    if (b == 0)
+    {
+        return a;
+    }
 
-   return gcd(b, a % b);
+    return gcd(b, a % b);
 }
 
 MathsUtil::Vec2 getDir(const LineSeg seg)
@@ -54,8 +54,22 @@ MathsUtil::Vec2 getDir(const LineSeg seg)
     MathsUtil::Vec2 dir = seg.second - seg.first;
     int a = dir[0]<0?-dir[0] : dir[0];
     int b = dir[1]<0?-dir[1] : dir[1];
-    int dirGcg = gcd(a,b);
-    return dir/dirGcg;
+    int dirGcd = 0;
+    if (a == 0)
+    {
+        dirGcd = b;
+    }
+    else if(b == 0)
+    {
+        dirGcd = a;
+    }
+    else
+    {
+        dirGcd = gcd(a,b);
+    }
+    // no direction to move in
+    assert(dirGcd != 0);
+    return dir/dirGcd;
 }
 
 Board addLineSeg(const Board old, LineSeg seg)
@@ -157,7 +171,6 @@ int main()
     Board initBoard = makeBoard(MaxX+1, MaxY+1);
 
     vector<LineSeg> ortSegs = Utils::vFilter<LineSeg>(lines,isOrtSeg);
-    cout<<endl;
 
     Board tmp = initBoard;
     for (size_t i = 0; i < ortSegs.size(); i++)
