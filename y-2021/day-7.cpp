@@ -25,7 +25,7 @@ vector<long> parseLine(string line)
 
 long getCostForPosition_part1(vector<long> aggrCrabs, long pos)
 {
-    ull retVal = 0;
+    long retVal = 0;
     long dif;
     for (long i = 0; i < aggrCrabs.size(); i++)
     {
@@ -38,7 +38,7 @@ long getCostForPosition_part1(vector<long> aggrCrabs, long pos)
 
 long getCostForPosition_part2(vector<long> aggrCrabs, long pos)
 {
-    ull retVal = 0;
+    long retVal = 0;
     long dif;
     for (long i = 0; i < aggrCrabs.size(); i++)
     {
