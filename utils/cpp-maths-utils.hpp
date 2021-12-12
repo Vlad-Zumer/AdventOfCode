@@ -94,7 +94,7 @@ namespace MathsUtil
                     os<<vec.arr[i]<<", ";
                 }
             }
-            os<<" }"<<endl;
+            os<<" }";
 
             return os;
         }
@@ -106,6 +106,24 @@ namespace MathsUtil
                 arr[i] = (T)0;
             }
         }
+
+        VecN(T init[size])
+        {
+            for (size_t i = 0; i < size; i++)
+            {
+                arr[i] = init[i];
+            }
+        }
+
+        VecN(initializer_list<T> list)
+        {
+            assert(list.size() == size);
+            size_t i = 0;
+            for (T val : list)
+            {
+                arr[i++] = val;
+            }
+        } 
 
         T get(const size_t index) const {return arr[index];}
 
@@ -163,6 +181,31 @@ namespace MathsUtil
     using Vec3l = VecN<long,3>;
     using Vec3ll = VecN<long long,3>;
     using Vec3f = VecN<float,3>;
+
+}
+
+namespace std {
+
+  template <class T, size_t size>
+  struct hash<MathsUtil::VecN<T,size>>
+  {
+    size_t operator()(const MathsUtil::VecN<T,size>& v) const
+    {
+      // Compute individual hash values for first,
+      // second and third and combine them using XOR
+      // and bit shifting:
+      size_t outVal = size;
+      for (size_t i = 0; i < size; i++)
+      {
+          outVal ^= (size_t)v.get(i);
+          outVal ^= outVal << (i % 5);
+          outVal ^= outVal >> ((i/2)%7);
+      }
+      
+      return outVal;
+    }
+  };
+
 }
 
 #endif
