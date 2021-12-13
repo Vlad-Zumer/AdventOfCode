@@ -177,6 +177,5 @@ int main()
     vector<vector<int>>lines = parseInput();
     cout<<part1(lines)<<endl;
     cout<<part2(lines)<<endl;
-    cout<<"Hello World"<<endl;
     return 0;
 }
