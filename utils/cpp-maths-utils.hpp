@@ -185,27 +185,24 @@ namespace MathsUtil
 }
 
 namespace std {
-
-  template <class T, size_t size>
-  struct hash<MathsUtil::VecN<T,size>>
-  {
-    size_t operator()(const MathsUtil::VecN<T,size>& v) const
+    template <class T, size_t size>
+    struct hash<MathsUtil::VecN<T,size>>
     {
-      // Compute individual hash values for first,
-      // second and third and combine them using XOR
-      // and bit shifting:
-      size_t outVal = size;
-      for (size_t i = 0; i < size; i++)
-      {
-          outVal ^= (size_t)v.get(i);
-          outVal ^= outVal << (i % 5);
-          outVal ^= outVal >> ((i/2)%7);
-      }
-      
-      return outVal;
-    }
-  };
-
+        size_t operator()(const MathsUtil::VecN<T,size>& v) const
+        {
+            // Compute individual hash values for first,
+            // second and third and combine them using XOR
+            // and bit shifting:
+            size_t outVal = size;
+            for (size_t i = 0; i < size; i++)
+            {
+                outVal ^= (size_t)v.get(i);
+                outVal ^= outVal << (i % 5);
+                outVal ^= outVal >> ((i/2)%7);
+            }
+            return outVal;
+        }
+    };
 }
 
 #endif
