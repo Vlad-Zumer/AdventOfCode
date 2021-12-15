@@ -4,15 +4,25 @@
 #include <string>
 #include <vector>
 #include <stdlib.h>
-#include <algorithm>
 #include <unordered_map>
+#include <queue>
 #include "../utils/cpp-utils.hpp"
 using namespace std;
 using ull = unsigned long long;
 
 struct Node
 {
+    struct Comparer
+    {
+        bool operator() (const Node& lhs, const Node& rhs)
+        {
+            return lhs.fScore > rhs.fScore;
+        }
+    };
+
     int x=-1,y=-1,val=-1;
+    ull fScore = ULLONG_MAX;
+    ull gScore = ULLONG_MAX;
 
     vector<Node> GetNeighboursDirs(const int maxX, const int maxY) const
     {
@@ -96,27 +106,26 @@ vector<Node> A_Star(vector<vector<Node>> nodes, Node start, Node end)
     maxX=nodes[0].size();
 
     unordered_map<Node,Node> cameFrom = {};
-    unordered_map<Node,ull> gScore={};
-    unordered_map<Node,ull> fScore={};
-    vector<Node> queue={};
-
+    priority_queue<Node,vector<Node>, Node::Comparer> queue; 
 
     for (size_t i = 0; i < nodes.size(); i++)
     {
         for (size_t j = 0; j < nodes[i].size(); j++)
         {
-            gScore[nodes[i][j]] = ULLONG_MAX;
-            fScore[nodes[i][j]] = ULLONG_MAX;
+            nodes[i][j].gScore= ULLONG_MAX;
+            nodes[i][j].fScore = ULLONG_MAX;
         }
     }
 
-    gScore[start] = 0;
-    fScore[start] = calculateHeuristic(start,end);
-    queue.push_back(nodes[start.y][start.x]);
+    Node& startNode = nodes[start.y][start.x];
+    
+    startNode.gScore = 0;
+    startNode.fScore = calculateHeuristic(start,end);
+    queue.push(startNode);
 
     while (queue.size() > 0)
     {
-        const Node Current = queue.front();
+        const Node Current = queue.top();
 
         if (Current == end)
         {
@@ -132,36 +141,19 @@ vector<Node> A_Star(vector<vector<Node>> nodes, Node start, Node end)
             return res;
         }
 
-        queue.erase(queue.begin());
+        queue.pop();
 
         vector<Node> neighbourDirs = Current.GetNeighboursDirs(maxX, maxY);
         for (const auto n : neighbourDirs)
         {
-            const Node neighbour = nodes[n.y][n.x];
-            ull tentativeGScore = gScore[Current] + neighbour.val;
-            if (tentativeGScore < gScore[neighbour])
+            Node& neighbour = nodes[n.y][n.x];
+            ull tentativeGScore = Current.gScore + neighbour.val;
+            if (tentativeGScore < neighbour.gScore)
             {
                 cameFrom[neighbour] = Current;
-                gScore[neighbour] = tentativeGScore;
-                fScore[neighbour] = tentativeGScore + calculateHeuristic(neighbour,end);
-                
-                for (size_t i = 0; i < queue.size(); i++)
-                {
-                    if(queue[i] == neighbour)
-                    {
-                        queue.erase(queue.begin()+i);
-                        break;
-                    }
-                }
-                size_t i;
-                for (i = 0; i < queue.size(); i++)
-                {
-                    if (fScore[queue[i]] > fScore[neighbour])
-                    {
-                        break;
-                    }
-                }
-                queue.insert(queue.begin()+i ,neighbour);
+                neighbour.gScore = tentativeGScore;
+                neighbour.fScore = tentativeGScore + calculateHeuristic(neighbour,end);
+                queue.push(neighbour);
             }
         }
     }
