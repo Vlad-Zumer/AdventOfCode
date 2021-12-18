@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "../utils/cpp-utils.hpp"
+#include <assert.h>
 using namespace std;
 using ull = unsigned long long;
 
@@ -12,23 +12,23 @@ struct Node
 {
     enum Type {VAL, PAIR};
     enum ChildType {ROOT, L, R};
-    
+
     Type type;
     ChildType childType;
     int depth = -1;
     int value = -1;
-    shared_ptr<Node> left = NULL, right = NULL ,parent = NULL;
+    shared_ptr<Node> left = NULL, right = NULL, parent = NULL;
 
     void SetDepth(int _depth)
     {
         depth = _depth;
-        if  (left != NULL)
+        if (left != NULL)
         {
-            left->SetDepth(depth+1);
+            left->SetDepth(depth + 1);
         }
         if (right != NULL)
         {
-            right->SetDepth(depth+1);
+            right->SetDepth(depth + 1);
         }
     }
 };
@@ -38,7 +38,7 @@ struct Node
 ostream& operator<< (ostream& os, const Node n)
 {
 #ifdef VERBOSE
-    string childType = n.childType == Node::ChildType::ROOT ? "ROOT" : n.childType == Node::ChildType::L? "L" : "R"; 
+    string childType = n.childType == Node::ChildType::ROOT ? "ROOT" : n.childType == Node::ChildType::L ? "L" : "R";
 
     os<<"Node: ("<<childType<<" - D:"<<n.depth<<"){ ";
     if (n.type == Node::Type::VAL)
@@ -67,16 +67,16 @@ shared_ptr<Node> CopyTree(const shared_ptr<Node> tree)
 {
     shared_ptr<Node> node = make_shared<Node>();
     node->type = tree->type;
-    node->childType = tree -> childType;
-    node->value = tree -> value;
-    node->depth = tree -> depth;
+    node->childType = tree->childType;
+    node->value = tree->value;
+    node->depth = tree->depth;
 
-    if(tree->left != NULL)
+    if (tree->left != NULL)
     {
         node->left = CopyTree(tree->left);
         node->left->parent = node;
     }
-    if(tree->right != NULL)
+    if (tree->right != NULL)
     {
         node->right = CopyTree(tree->right);
         node->right->parent = node;
@@ -91,12 +91,12 @@ void DeleteTree(const shared_ptr<Node> tree)
     {
         tree->parent = NULL;
     }
-    if(tree->left != NULL)
+    if (tree->left != NULL)
     {
         DeleteTree(tree->left);
         tree->left = NULL;
     }
-    if(tree->right != NULL)
+    if (tree->right != NULL)
     {
         DeleteTree(tree->right);
         tree->right = NULL;
@@ -114,18 +114,18 @@ vector<string> SplitTreeString(const string str)
         lhs = str.substr(0,1);
         // 2 to chop off the ","
         rhs = str.substr(2);
-        
+
         return {lhs, rhs};
     }
     int bracketCount = 1;
     index++;
     while (bracketCount > 0)
     {
-        if(str[index] == ']')
+        if (str[index] == ']')
         {
             bracketCount--;
         }
-        if(str[index] == '[')
+        if (str[index] == '[')
         {
             bracketCount++;
         }
@@ -136,7 +136,7 @@ vector<string> SplitTreeString(const string str)
     //        ^
     //      index
     lhs = str.substr(0,index);
-    rhs = str.substr(index+1);
+    rhs = str.substr(index + 1);
     return {lhs, rhs};
 }
 
@@ -190,17 +190,16 @@ vector<shared_ptr<Node>> ParseInput()
     return nodes;
 }
 
-shared_ptr<Node> PartialAdd (const shared_ptr<Node> lhs, const shared_ptr<Node> rhs)
+shared_ptr<Node> PartialAdd(const shared_ptr<Node> lhs, const shared_ptr<Node> rhs)
 {
-    int depth;
     shared_ptr<Node> n = make_shared<Node>();
     n->type = Node::Type::PAIR;
     n->childType = Node::ChildType::ROOT;
-    
+
     n->left = lhs;
     n->left->childType = Node::ChildType::L;
     n->left->parent = n;
-    
+
     n->right = rhs;
     n->right->childType = Node::ChildType::R;
     n->right->parent = n;
@@ -209,7 +208,7 @@ shared_ptr<Node> PartialAdd (const shared_ptr<Node> lhs, const shared_ptr<Node> 
 
 bool ExplodeTreeRec(shared_ptr<Node> tree)
 {
-        if (tree->type == Node::Type::PAIR &&
+    if (tree->type == Node::Type::PAIR &&
         tree->depth >= 4 &&
         tree->left->type == Node::Type::VAL &&
         tree->right->type == Node::Type::VAL)
@@ -260,7 +259,7 @@ bool ExplodeTreeRec(shared_ptr<Node> tree)
             {
                 aux = tree;
             }
-            
+
             // if root do nothing
             if (aux->childType != Node::ChildType::ROOT)
             {
@@ -273,21 +272,21 @@ bool ExplodeTreeRec(shared_ptr<Node> tree)
                 aux->value += tree->right->value;
             }
         }
-
+        aux = NULL;
         tree->type = Node::Type::VAL;
         tree->value = 0;
-        tree->left->parent = NULL;
+        DeleteTree(tree->left);
         tree->left = NULL;
-        tree->right->parent = NULL;
+        DeleteTree(tree->right);
         tree->right = NULL;
 
         return true;
     }
 
-    if(tree->type == Node::Type::PAIR)
+    if (tree->type == Node::Type::PAIR)
     {
         bool treeChanged = ExplodeTreeRec(tree->left);
-        if(!treeChanged)
+        if (!treeChanged)
         {
             treeChanged = ExplodeTreeRec(tree->right);
         }
@@ -302,21 +301,21 @@ bool ExplodeTreeRec(shared_ptr<Node> tree)
 
 bool SplitTreeRec(shared_ptr<Node> tree)
 {
-    if (tree->type == Node::Type::VAL && tree->value >=10)
+    if (tree->type == Node::Type::VAL && tree->value >= 10)
     {
         // split
         shared_ptr<Node> lhs = make_shared<Node>();
         lhs->childType = Node::ChildType::L;
         lhs->type = Node::Type::VAL;
-        lhs->value = tree->value/2;
-        lhs->depth = tree->depth+1;
+        lhs->value = tree->value / 2;
+        lhs->depth = tree->depth + 1;
         lhs->parent = tree;
 
         shared_ptr<Node> rhs = make_shared<Node>();
         rhs->childType = Node::ChildType::R;
         rhs->type = Node::Type::VAL;
-        rhs->value = (tree->value+1)/2;
-        rhs->depth = tree->depth+1;
+        rhs->value = (tree->value + 1) / 2;
+        rhs->depth = tree->depth + 1;
         rhs->parent = tree;
 
         tree->value = -1;
@@ -327,10 +326,10 @@ bool SplitTreeRec(shared_ptr<Node> tree)
         return true;
     }
 
-    if(tree->type == Node::Type::PAIR)
+    if (tree->type == Node::Type::PAIR)
     {
         bool treeChanged = SplitTreeRec(tree->left);
-        if(!treeChanged)
+        if (!treeChanged)
         {
             treeChanged = SplitTreeRec(tree->right);
         }
@@ -346,7 +345,7 @@ bool SplitTreeRec(shared_ptr<Node> tree)
 bool ReduceTreeRec(shared_ptr<Node> tree)
 {
     bool changedTree = ExplodeTreeRec(tree);
-    if(!changedTree)
+    if (!changedTree)
     {
         changedTree = SplitTreeRec(tree);
     }
@@ -364,22 +363,22 @@ void ReduceTree(shared_ptr<Node> tree)
 
 shared_ptr<Node> Add(const shared_ptr<Node> lhs, const shared_ptr<Node> rhs)
 {
-    shared_ptr<Node> tree = PartialAdd(lhs,rhs);
+    shared_ptr<Node> tree = PartialAdd(lhs, rhs);
     tree->SetDepth(0);
     ReduceTree(tree);
     return tree;
 }
 
 ull TreeMagnitude(shared_ptr<Node> tree)
-{  
+{
     ull sum = 0;
-    if(tree->type == Node::Type::VAL)
+    if (tree->type == Node::Type::VAL)
     {
         sum = tree->value;
     }
-    if(tree->type == Node::Type::PAIR)
+    if (tree->type == Node::Type::PAIR)
     {
-        sum = 3*TreeMagnitude(tree->left) + 2*TreeMagnitude(tree->right);
+        sum = 3 * TreeMagnitude(tree->left) + 2 * TreeMagnitude(tree->right);
     }
     return sum;
 }
@@ -391,37 +390,42 @@ ull part1(const vector<shared_ptr<Node>> numbers)
     for (size_t i = 1; i < numbers.size(); i++)
     {
         x = CopyTree(numbers.at(i));
-        acc = Add(acc,x);
+        acc = Add(acc, x);
     }
     acc->SetDepth(0);
-    return TreeMagnitude(acc);
+    ull res = TreeMagnitude(acc);
+    DeleteTree(acc);
+    return res;
 }
 
 ull part2(const vector<shared_ptr<Node>> numbers)
 {
     ull maxSum = 0, sum = 0;
 
-    for (size_t i = 0; i < numbers.size()-1; i++)
+    for (size_t i = 0; i < numbers.size() - 1; i++)
     {
-        for (size_t j = i+1; j < numbers.size(); j++)
+        for (size_t j = i + 1; j < numbers.size(); j++)
         {
-            shared_ptr<Node> a,b,res;
+            shared_ptr<Node> a, b, res;
             a = CopyTree(numbers.at(i));
             b = CopyTree(numbers.at(j));
-            
-            res = Add(a,b);
+
+            res = Add(a, b);
             sum = TreeMagnitude(res);
-            if(sum > maxSum)
+            if (sum > maxSum)
             {
                 maxSum = sum;
             }
-            
-            res = Add(b,a);
+
+            res = Add(b, a);
             sum = TreeMagnitude(res);
-            if(sum > maxSum)
+            if (sum > maxSum)
             {
                 maxSum = sum;
             }
+            DeleteTree(a);
+            DeleteTree(b);
+            DeleteTree(res);
         }
     }
 
@@ -433,5 +437,11 @@ int main()
     vector<shared_ptr<Node>> nodes = ParseInput();
     cout<<"Part1:"<<part1(nodes)<<endl;
     cout<<"Part2:"<<part2(nodes)<<endl;
+
+    for (size_t i = 0; i < nodes.size(); i++)
+    {
+        DeleteTree(nodes[i]);
+    }
+    nodes.clear();
     return 0;
 }
