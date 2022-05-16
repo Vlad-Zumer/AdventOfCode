@@ -217,6 +217,51 @@ namespace Utils
         return retVal;
     }
 
+    /// Good idea for multi threading/GPU systems
+    template<typename A>
+    A vFastReduceAssociative(vector<A> in, A(*func)(const A, const A))
+    {
+        static_assert(false, "Use Utils::vReduceL or vReduceL_f as they get better performance when optimized (on a single thread).");
+        /*
+        in: 0 1 2 3 4 5 6 7 8 9 10
+        process:
+            in[0] = f(0,1)
+            in[2] = f(2,3)
+            in[4] = f(4,5)
+            in[6] = f(6,7)
+            in[8] = f(8,9)
+            in[10] = 10
+        --------------
+        in: f0 x f2 x f4 x f6 x f8 x 10
+        process: 
+            in[0] = f(0,2)
+            in[4] = f(4,6)
+            in[8] = f(8,10)
+        --------------
+        in: ff0 x x x ff4 x x x ff8 x x
+        process:
+            in[0] = f(0,4)
+            in[8] = in[8]
+        --------------
+        in: fff0 x x x x x x x ff8 x x
+        process:
+            in[0] = f(0,8)
+        --------------
+        in: ffff0 x x x x x x x x x x x 
+        */
+        const size_t inSize = in.size();
+        size_t step = 2;
+        while (step/2 <= inSize)
+        {
+            for (size_t i = 0 ; i + step/2 < inSize; i += step)
+            {
+                in[i] = func(in[i], in[i+step/2]);
+            }
+            step *= 2;
+        }
+        return in[0];
+    }
+
     template<typename A, typename B>
     vector<pair<A,B>> vZip(const vector<A> as, const vector<B> bs)
     {
@@ -227,15 +272,19 @@ namespace Utils
         }
     }
 
-    vector<long long> vRangeIncl(long long start, long long end)
+    template<typename T>
+    vector<T> vRangeIncl(const T start, const T end)
     {
+        static_assert(is_arithmetic<T>::value,"Cannot make vector of non-arithmetic type");
         assert(start < end);
         
-        vector<long long> ret;
-        for (long long i = start; i <= end ; i++)
+        vector<T> ret;
+        
+        for (T i = start; i <= end; i++ )
         {
             ret.push_back(i);
         }
+
         return ret;
     }
 

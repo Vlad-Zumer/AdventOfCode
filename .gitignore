@@ -1,4 +1,4 @@
 .**/
 **/**.exe
 **/test.input
-test/**
+**/tests
