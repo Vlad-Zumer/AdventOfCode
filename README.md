@@ -34,6 +34,7 @@ Use all languages supported by github language detection.
           <li> Python
           <li> Ruby
           <li> Rust
+          <li> Shell
           <li> Typescript
       </ul>
 </details>

@@ -159,7 +159,7 @@
 * [ ] Scala
 * [ ] Scheme
 * [ ] SCSS
-* [ ] Shell
+* [x] Shell
 * [ ] Smali
 * [ ] Smalltalk
 * [ ] Smarty
