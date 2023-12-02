@@ -17,3 +17,23 @@ Repo for all advent of code entries
 ### How to modify flags in code runner
 1. VSCode -> Extensions Panel -> Code Runner -> Cog Symbol -> Extension Settings
 2. `Code Runner: Executor Map` -> Edit in JSON
+
+### Language Challenge
+Use all languages supported by github language detection.
+
+* All languages [table](./language_table.md) 
+* Currently used languages
+  * Api [link](https://api.github.com/repos/Vlad-Zumer/AdventOfCode/languages)
+  * <details> 
+      <summary> List </summary> 
+      <ul>
+          <!-- ListStart -->
+          <li> C#
+          <li> C++
+          <li> Haskell
+          <li> Python
+          <li> Ruby
+          <li> Rust
+          <li> Typescript
+      </ul>
+</details>
