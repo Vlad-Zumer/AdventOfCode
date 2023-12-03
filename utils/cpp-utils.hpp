@@ -230,7 +230,7 @@ namespace Utils
     template <typename A>
     A vFastReduceAssociative(vector<A> in, A (*func)(const A, const A))
     {
-        static_assert(std::bool_constant<false>, "Use Utils::vReduceL or vReduceL_f as they get better performance when optimized (on a single thread).");
+        static_assert(std::bool_constant<false>::value, "Use Utils::vReduceL or vReduceL_f as they get better performance when optimized (on a single thread).");
         /*
         in: 0 1 2 3 4 5 6 7 8 9 10
         process:
