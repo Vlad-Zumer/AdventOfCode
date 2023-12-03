@@ -5,3 +5,7 @@
 
 # rust
 **/target/
+
+#binaries
+**/bin/
+**/obj/
