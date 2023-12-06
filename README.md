@@ -28,9 +28,9 @@ Use all languages supported by github language detection.
       <summary> List </summary> 
       <ul>
           <!-- ListStart -->
+          <li> C
           <li> C#
           <li> C++
-          <li> C
           <li> Haskell
           <li> Python
           <li> Ruby
