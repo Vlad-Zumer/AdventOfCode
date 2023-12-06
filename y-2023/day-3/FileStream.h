@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define STREAM_BUFFER_SIZE 5
+#define STREAM_BUFFER_SIZE 256
 
 typedef struct
 {
