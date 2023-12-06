@@ -26,7 +26,7 @@ parse_num()
     esac
 };
 
-# INPUT_FILE="./tst_input.txt";
+# INPUT_FILE="./test.txt";
 INPUT_FILE="./input.txt"
 
 NUMS1=();

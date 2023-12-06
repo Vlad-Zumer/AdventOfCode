@@ -1,11 +1,14 @@
 .**/
-**/**.exe
+
+# test
 **/test.input
+**/test.txt
 **/tests
 
 # rust
 **/target/
 
 #binaries
+**/**.exe
 **/bin/
 **/obj/
