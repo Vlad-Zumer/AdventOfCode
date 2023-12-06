@@ -30,6 +30,7 @@ Use all languages supported by github language detection.
           <!-- ListStart -->
           <li> C#
           <li> C++
+          <li> C
           <li> Haskell
           <li> Python
           <li> Ruby

@@ -21,7 +21,7 @@
 * [ ] Blade
 * [ ] BlitzBasic
 * [ ] Brightscript
-* [ ] C
+* [x] C
 * [x] C#
 * [x] C++
 * [ ] Ceylon
