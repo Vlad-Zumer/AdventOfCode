@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "FileStream.h"
-#include "DynamicArray.h"
+#include "../../utils/c-dynamic-array.h"
 #include "AABB.h"
 
 // Think of the input as squares formed from vertices
