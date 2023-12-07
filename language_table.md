@@ -46,6 +46,9 @@
 * [ ] Brainfuck
 * [ ] BrighterScript
 * [ ] Brightscript
+* [x] C
+* [x] C#
+* [x] C++
 * [ ] C2hs Haskell
 * [ ] CAP CDS
 * [ ] CLIPS
@@ -163,6 +166,7 @@
 * [ ] HLSL
 * [ ] Hack
 * [ ] Harbour
+* [x] Haskell
 * [ ] Haxe
 * [ ] HiveQL
 * [ ] HolyC
@@ -315,6 +319,7 @@
 * [ ] Pony
 * [ ] Portugol
 * [ ] PowerBuilder
+* [x] PowerShell
 * [ ] Praat
 * [ ] Processing
 * [ ] Procfile
@@ -325,6 +330,7 @@
 * [ ] PureBasic
 * [ ] PureScript
 * [ ] Pyret
+* [x] Python
 * [ ] Python console
 * [ ] Q#
 * [ ] QML
@@ -353,6 +359,8 @@
 * [ ] RobotFramework
 * [ ] Rouge
 * [ ] RouterOS Script
+* [x] Ruby
+* [x] Rust
 * [ ] SAS
 * [ ] SMT
 * [ ] SQF
@@ -366,6 +374,7 @@
 * [ ] Scilab
 * [ ] Self
 * [ ] ShaderLab
+* [x] Shell
 * [ ] ShellSession
 * [ ] Shen
 * [ ] Sieve
@@ -402,6 +411,7 @@
 * [ ] Thrift
 * [ ] Toit
 * [ ] Turing
+* [x] TypeScript
 * [ ] Typst
 * [ ] Unified Parallel C
 * [ ] Unix Assembly
@@ -460,13 +470,3 @@
 * [ ] sed
 * [ ] wisp
 * [ ] xBase
-* [x] C
-* [x] C#
-* [x] C++
-* [x] Haskell
-* [x] PowerShell
-* [x] Python
-* [x] Ruby
-* [x] Rust
-* [x] Shell
-* [x] TypeScript

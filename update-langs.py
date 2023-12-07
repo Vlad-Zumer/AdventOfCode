@@ -65,6 +65,7 @@ with open(LANGS_ALL, "r") as fstream:
         if langData.get("type", None) == "programming":
             allLangs.append(langName)
 
+allLangs.sort()
 
 allLangsMDList:list[str] = []
 usedLangsMDList:list[str] = []
@@ -74,10 +75,6 @@ for lang in allLangs:
         allLangsMDList.append("* [x] " + lang + "\n")
     else:
         allLangsMDList.append("* [ ] " + lang + "\n")
-
-
-allLangsMDList.sort()
-usedLangsMDList.sort()
 
 fileContent:list[str]= []
 with open("README.md", "r") as fstream:
