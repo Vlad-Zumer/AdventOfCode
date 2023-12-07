@@ -62,7 +62,7 @@ with open(LANGS_ALL, "r") as fstream:
     langName:str
     langData:dict
     for langName, langData in langs.items():
-        if langData.get("type", None) == "programming":
+        if langData.get("type", None) == "programming" and langData.get("group", None) == None:
             allLangs.append(langName)
 
 allLangs.sort()

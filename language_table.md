@@ -15,10 +15,8 @@
 * [ ] Ada
 * [ ] Agda
 * [ ] Alloy
-* [ ] Alpine Abuild
 * [ ] AngelScript
 * [ ] Apex
-* [ ] Apollo Guidance Computer
 * [ ] AppleScript
 * [ ] Arc
 * [ ] AspectJ
@@ -35,12 +33,10 @@
 * [ ] Befunge
 * [ ] Berry
 * [ ] Bicep
-* [ ] Bison
 * [ ] BitBake
 * [ ] BlitzBasic
 * [ ] BlitzMax
 * [ ] Bluespec
-* [ ] Bluespec BH
 * [ ] Boo
 * [ ] Boogie
 * [ ] Brainfuck
@@ -49,7 +45,6 @@
 * [x] C
 * [x] C#
 * [x] C++
-* [ ] C2hs Haskell
 * [ ] CAP CDS
 * [ ] CLIPS
 * [ ] CMake
@@ -58,7 +53,6 @@
 * [ ] CWeb
 * [ ] Cadence
 * [ ] Cairo
-* [ ] CameLIGO
 * [ ] Cap'n Proto
 * [ ] CartoCSS
 * [ ] Ceylon
@@ -76,7 +70,6 @@
 * [ ] CodeQL
 * [ ] CoffeeScript
 * [ ] ColdFusion
-* [ ] ColdFusion CFC
 * [ ] Common Lisp
 * [ ] Common Workflow Language
 * [ ] Component Pascal
@@ -105,7 +98,6 @@
 * [ ] Dylan
 * [ ] E
 * [ ] ECL
-* [ ] ECLiPSe
 * [ ] EQ
 * [ ] Earthly
 * [ ] EdgeQL
@@ -113,7 +105,6 @@
 * [ ] Elixir
 * [ ] Elm
 * [ ] Elvish
-* [ ] Elvish Transcript
 * [ ] Emacs Lisp
 * [ ] EmberScript
 * [ ] Erlang
@@ -127,11 +118,8 @@
 * [ ] Faust
 * [ ] Fennel
 * [ ] Filebench WML
-* [ ] Filterscript
 * [ ] Fluent
 * [ ] Forth
-* [ ] Fortran
-* [ ] Fortran Free Form
 * [ ] FreeBasic
 * [ ] FreeMarker
 * [ ] Frege
@@ -149,8 +137,6 @@
 * [ ] Genero
 * [ ] Genie
 * [ ] Genshi
-* [ ] Gentoo Ebuild
-* [ ] Gentoo Eclass
 * [ ] Gherkin
 * [ ] Gleam
 * [ ] Glyph
@@ -161,7 +147,6 @@
 * [ ] Grace
 * [ ] Grammatical Framework
 * [ ] Groovy
-* [ ] Groovy Server Pages
 * [ ] HCL
 * [ ] HLSL
 * [ ] Hack
@@ -183,20 +168,14 @@
 * [ ] Io
 * [ ] Ioke
 * [ ] Isabelle
-* [ ] Isabelle ROOT
 * [ ] J
 * [ ] JCL
-* [ ] JFlex
 * [ ] JSONiq
 * [ ] Janet
 * [ ] Jasmin
 * [ ] Java
-* [ ] Java Server Pages
 * [x] JavaScript
-* [ ] JavaScript+ERB
 * [ ] JetBrains MPS
-* [ ] Jison
-* [ ] Jison Lex
 * [ ] Jolie
 * [ ] Jsonnet
 * [ ] Julia
@@ -214,12 +193,8 @@
 * [ ] Lasso
 * [ ] Lean
 * [ ] Lex
-* [ ] LigoLANG
 * [ ] LilyPond
 * [ ] Limbo
-* [ ] Literate Agda
-* [ ] Literate CoffeeScript
-* [ ] Literate Haskell
 * [ ] LiveScript
 * [ ] Logos
 * [ ] Logtalk
@@ -228,13 +203,11 @@
 * [ ] Lua
 * [ ] M
 * [ ] M4
-* [ ] M4Sugar
 * [ ] MATLAB
 * [ ] MAXScript
 * [ ] MLIR
 * [ ] MQL4
 * [ ] MQL5
-* [ ] MUF
 * [ ] Macaulay2
 * [ ] Makefile
 * [ ] Mako
@@ -255,7 +228,6 @@
 * [ ] Moocode
 * [ ] MoonScript
 * [ ] Motoko
-* [ ] Motorola 68K Assembly
 * [ ] Move
 * [ ] Myghty
 * [ ] NASL
@@ -274,7 +246,6 @@
 * [ ] Nit
 * [ ] Nix
 * [ ] Nu
-* [ ] NumPy
 * [ ] Nushell
 * [ ] OCaml
 * [ ] ObjectScript
@@ -286,10 +257,8 @@
 * [ ] Opa
 * [ ] Opal
 * [ ] Open Policy Agent
-* [ ] OpenCL
 * [ ] OpenEdge ABL
 * [ ] OpenQASM
-* [ ] OpenRC runscript
 * [ ] OpenSCAD
 * [ ] Ox
 * [ ] Oxygene
@@ -305,8 +274,6 @@
 * [ ] Pan
 * [ ] Papyrus
 * [ ] Parrot
-* [ ] Parrot Assembly
-* [ ] Parrot Internal Representation
 * [ ] Pascal
 * [ ] Pawn
 * [ ] Pep8
@@ -331,7 +298,6 @@
 * [ ] PureScript
 * [ ] Pyret
 * [x] Python
-* [ ] Python console
 * [ ] Q#
 * [ ] QML
 * [ ] QMake
@@ -348,7 +314,6 @@
 * [ ] Rascal
 * [ ] ReScript
 * [ ] Reason
-* [ ] ReasonLIGO
 * [ ] Rebol
 * [ ] Red
 * [ ] Redcode
@@ -386,7 +351,6 @@
 * [ ] Smalltalk
 * [ ] Smarty
 * [ ] Smithy
-* [ ] Snakemake
 * [ ] Solidity
 * [ ] SourcePawn
 * [ ] Squirrel
@@ -402,19 +366,15 @@
 * [ ] TL-Verilog
 * [ ] TLA
 * [ ] TSQL
-* [ ] TSX
 * [ ] TXL
 * [ ] Talon
 * [ ] Tcl
-* [ ] Tcsh
 * [ ] Terra
 * [ ] Thrift
 * [ ] Toit
 * [ ] Turing
 * [x] TypeScript
 * [ ] Typst
-* [ ] Unified Parallel C
-* [ ] Unix Assembly
 * [ ] Uno
 * [ ] UnrealScript
 * [ ] UrWeb
@@ -458,7 +418,6 @@
 * [ ] Zig
 * [ ] Zimpl
 * [ ] eC
-* [ ] fish
 * [ ] hoon
 * [ ] jq
 * [ ] mIRC Script
