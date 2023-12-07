@@ -27,15 +27,17 @@ Use all languages supported by github language detection.
   * <details> 
       <summary> List </summary> 
       <ul>
-          <!-- ListStart -->
+          <!-- UsedLangListStart -->
           <li> C
           <li> C#
           <li> C++
           <li> Haskell
+          <li> PowerShell
           <li> Python
           <li> Ruby
           <li> Rust
           <li> Shell
-          <li> Typescript
+          <li> TypeScript
+          <!-- UsedLangListEnd -->
       </ul>
 </details>
