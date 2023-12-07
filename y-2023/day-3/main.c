@@ -183,6 +183,13 @@ void part2(NumberBoxList *numberBoxes, SymbolBoxList *symbolBoxes)
     for (size_t i = 0; i < symbolBoxes->size; i++)
     {
         const SymbolBox symBox = symbolBoxes->buffer[i];
+
+        if (symBox.symbol != '*')
+        {
+            // skip non-gears
+            continue;
+        }
+
         int numOfIntersections = 0;
         unsigned long ratio = 1;
         for (size_t i = 0; i < numberBoxes->size; i++)
