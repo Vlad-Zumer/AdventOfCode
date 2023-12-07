@@ -192,7 +192,7 @@
 * [ ] Jasmin
 * [ ] Java
 * [ ] Java Server Pages
-* [ ] JavaScript
+* [x] JavaScript
 * [ ] JavaScript+ERB
 * [ ] JetBrains MPS
 * [ ] Jison

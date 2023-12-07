@@ -32,6 +32,7 @@ Use all languages supported by github language detection.
           <li> C#
           <li> C++
           <li> Haskell
+          <li> JavaScript
           <li> PowerShell
           <li> Python
           <li> Ruby
