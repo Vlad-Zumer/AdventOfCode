@@ -14,7 +14,7 @@ namespace Utils
 
     using namespace std;
 
-    vector<string> str_split(const string str, const string tok)
+    vector<string> str_split(const string& str, const string& tok)
     {
         assert(tok.size() > 0);
         vector<string> retVal = {};
@@ -41,7 +41,7 @@ namespace Utils
         return retVal;
     }
 
-    string str_trim(const string str)
+    string str_trim(const string& str)
     {
         size_t begin = 0, end = str.size() - 1;
 
@@ -68,7 +68,7 @@ namespace Utils
         return str.substr(begin, end - begin + 1);
     }
 
-    string str_reverse(const string str)
+    string str_reverse(const string& str)
     {
         string out;
         for (auto it = str.rbegin(); it != str.rend(); it++)
@@ -79,11 +79,11 @@ namespace Utils
     }
 
     template <typename A>
-    vector<A> vFilter(const vector<A> in, bool (*pred)(const A))
+    vector<A> vFilter(const vector<A>& in, bool (*pred)(const A&))
     {
         vector<A> retVal = {};
 
-        for (const A s : in)
+        for (const A& s : in)
         {
             if (pred(s))
             {
@@ -95,11 +95,11 @@ namespace Utils
     }
 
     template <typename A>
-    vector<A> vFilter_f(const vector<A> in, function<bool(const A)> pred)
+    vector<A> vFilter_f(const vector<A>& in, function<bool(const A&)> pred)
     {
         vector<A> retVal = {};
 
-        for (const A s : in)
+        for (const A& s : in)
         {
             if (pred(s))
             {
@@ -111,11 +111,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    map<A, B> mFilter(const map<A, B> in, bool (*pred)(const A, const B))
+    map<A, B> mFilter(const map<A, B>& in, bool (*pred)(const A&, const B&))
     {
         map<A, B> retVal = {};
 
-        for (auto const s : in)
+        for (const auto& s : in)
         {
             if (pred(s.first, s.second))
             {
@@ -127,11 +127,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    map<A, B> mFilter_f(const map<A, B> in, function<bool(const A, const B)> pred)
+    map<A, B> mFilter_f(const map<A, B>& in, function<bool(const A&, const B&)> pred)
     {
         map<A, B> retVal = {};
 
-        for (auto const s : in)
+        for (const auto& s : in)
         {
             if (pred(s.first, s.second))
             {
@@ -143,11 +143,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    unordered_map<A, B> umFilter(const unordered_map<A, B> in, bool (*pred)(const A, const B))
+    unordered_map<A, B> umFilter(const unordered_map<A, B>& in, bool (*pred)(const A&, const B&))
     {
         unordered_map<A, B> retVal = {};
 
-        for (auto const s : in)
+        for (const auto &s : in)
         {
             if (pred(s.first, s.second))
             {
@@ -159,11 +159,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    unordered_map<A, B> umFilter_f(const unordered_map<A, B> in, function<bool(const A, const B)> pred)
+    unordered_map<A, B> umFilter_f(const unordered_map<A, B>& in, function<bool(const A&, const B&)> pred)
     {
         unordered_map<A, B> retVal = {};
 
-        for (auto const s : in)
+        for (const auto &s : in)
         {
             if (pred(s.first, s.second))
             {
@@ -175,11 +175,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    vector<B> vMap(const vector<A> in, B (*func)(const A))
+    vector<B> vMap(const vector<A>& in, B (*func)(const A&))
     {
         vector<B> retVal = {};
 
-        for (auto const x : in)
+        for (const auto &x : in)
         {
             retVal.push_back(func(x));
         }
@@ -188,11 +188,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    vector<B> vMap_f(const vector<A> in, function<B(const A)> func)
+    vector<B> vMap_f(const vector<A>& in, function<B(const A&)> func)
     {
         vector<B> retVal = {};
 
-        for (auto const x : in)
+        for (const auto &x : in)
         {
             retVal.push_back(func(x));
         }
@@ -201,11 +201,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    B vReduceL(const vector<A> in, B (*func)(const A, const B), const B initVal)
+    B vReduceL(const vector<A>& in, B (*func)(const A&, const B), const B initVal)
     {
         B retVal = initVal;
 
-        for (auto const x : in)
+        for (const auto &x : in)
         {
             retVal = func(x, retVal);
         }
@@ -214,11 +214,11 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    B vReduceL_f(const vector<A> in, function<B(const A, const B)> func, const B initVal)
+    B vReduceL_f(const vector<A>& in, function<B(const A&, const B)> func, const B initVal)
     {
         B retVal = initVal;
 
-        for (auto const x : in)
+        for (const auto &x : in)
         {
             retVal = func(x, retVal);
         }
@@ -272,13 +272,15 @@ namespace Utils
     }
 
     template <typename A, typename B>
-    vector<pair<A, B>> vZip(const vector<A> as, const vector<B> bs)
+    vector<pair<A, B>> vZip(const vector<A>& as, const vector<B>& bs)
     {
         vector<pair<A, B>> ret;
         for (size_t i = 0; i < as.size() && i < bs.size(); i++)
         {
             ret.push_back({as[i], bs[i]});
         }
+
+        return ret;
     }
 
     template <typename T>
@@ -297,12 +299,12 @@ namespace Utils
         return ret;
     }
 
-    bool isEmptyStr(const string s)
+    bool isEmptyStr(const string& s)
     {
         return s.size() == 0;
     }
 
-    bool isNotEmptyStr(const string s)
+    bool isNotEmptyStr(const string& s)
     {
         return !isEmptyStr(s);
     }

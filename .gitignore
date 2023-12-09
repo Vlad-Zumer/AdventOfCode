@@ -1,8 +1,8 @@
 .**/
 
 # test
-**/test.input
-**/test.txt
+**/test.*
+**/test
 **/tests
 
 # rust
