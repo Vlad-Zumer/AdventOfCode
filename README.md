@@ -12,7 +12,7 @@ Repo for all advent of code entries
 | Language | Special Running Flags |      Info      |
 | :------: | :-------------------: | :------------: |
 |   C++    |   `-std=c++17 -O3`    |                |
-|   Rust   |                       | `rustc 1.66.0` |
+|   Rust   |                       | `rustc 1.74.1` |
 
 ### How to modify flags in code runner
 1. VSCode -> Extensions Panel -> Code Runner -> Cog Symbol -> Extension Settings
