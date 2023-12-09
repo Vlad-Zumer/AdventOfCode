@@ -15,6 +15,16 @@ namespace Utils
 
     using namespace std;
 
+    string str_reverse(const string &str)
+    {
+        string out;
+        for (auto it = str.rbegin(); it != str.rend(); it++)
+        {
+            out += *it;
+        }
+        return out;
+    }
+
     vector<string> str_split(const string &str, const string &tok)
     {
         assert(tok.size() > 0);
@@ -40,6 +50,90 @@ namespace Utils
         retVal.push_back(tmp);
 
         return retVal;
+    }
+
+    bool str_contains(const string &str, const char c)
+    {
+        return str.find(c) != std::string::npos;
+    }
+
+    bool str_contains(const string &str, const string &needle)
+    {
+        return str.find(needle) != std::string::npos;
+    }
+
+    bool str_startsWith(const string &str, const string &pattern)
+    {
+        if (str.size() < pattern.size())
+        {
+            return false;
+        }
+
+        for (size_t i = 0; i < pattern.size(); i++)
+        {
+            if (str.at(i) != pattern.at(i))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool str_endsWith(const string &str, const string &pattern)
+    {
+        //   STR : ****ABC
+        //   PAT : ABC
+
+        // R_STR : CBA****
+        // R_PAT : CBA
+
+        const string rStr = str_reverse(str);
+        const string rPattern = str_reverse(pattern);
+
+        return str_startsWith(rStr, rPattern);
+    }
+
+    string str_chopStart(const string &str, const string &setCharsToChop)
+    {
+        size_t startIndex = 0;
+
+        while (startIndex < str.size())
+        {
+            if (!str_contains(setCharsToChop, str.at(startIndex)))
+            {
+                break;
+            }
+            startIndex++;
+        }
+
+        if (startIndex == str.size())
+        {
+            return "";
+        }
+
+        return str.substr(startIndex);
+    }
+
+    string str_chopEnd(const string &str, const string &setCharsToChop)
+    {
+        size_t startIndex = 0;
+        const string rStr = str_reverse(str);
+        while (startIndex < rStr.size())
+        {
+            if (!str_contains(setCharsToChop, rStr.at(startIndex)))
+            {
+                break;
+            }
+            startIndex++;
+        }
+
+        if (startIndex == rStr.size())
+        {
+            return "";
+        }
+
+        return str_reverse(rStr.substr(startIndex));
     }
 
     string str_trim(const string &str)
@@ -69,14 +163,26 @@ namespace Utils
         return str.substr(begin, end - begin + 1);
     }
 
-    string str_reverse(const string &str)
+    template <typename A, typename B>
+    vector<pair<A, B>> mapToVec(const map<A, B> &map)
     {
-        string out;
-        for (auto it = str.rbegin(); it != str.rend(); it++)
+        vector<pair<A, B>> retVal;
+        for (const auto &kvp : map)
         {
-            out += *it;
+            retVal.push_back(kvp);
         }
-        return out;
+        return retVal;
+    }
+
+    template <typename A, typename B>
+    vector<pair<A, B>> umapToVec(const unordered_map<A, B> &map)
+    {
+        vector<pair<A, B>> retVal;
+        for (const auto &kvp : map)
+        {
+            retVal.push_back(kvp);
+        }
+        return retVal;
     }
 
     template <typename A, size_t N>
