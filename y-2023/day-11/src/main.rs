@@ -1,17 +1,14 @@
 #![allow(non_snake_case)]
-#![allow(dead_code)]
-#![allow(unused_imports)]
+// #![allow(dead_code)]
+// #![allow(unused_imports)]
 use std::{
-    fmt::{Display, Write},
     fs::File,
     io::BufRead,
     io::BufReader,
-    ops::{Add, AddAssign, Neg, Not, Sub, SubAssign},
-    usize,
 };
 
 use utils::{
-    nd_vec::numeric_traits::{NumericBase, SignedNumeric},
+    nd_vec::numeric_traits::SignedNumeric,
     nd_vec::Vec2,
     vec_extensions::Transposable,
 };
@@ -26,14 +23,6 @@ enum MapElement {
 enum ExpandIndex {
     X(usize),
     Y(usize),
-}
-impl ExpandIndex {
-    fn getValue(&self) -> usize {
-        match self {
-            ExpandIndex::X(valx) => *valx,
-            ExpandIndex::Y(valy) => *valy,
-        }
-    }
 }
 
 fn parseFile(filePath: &str) -> Vec<Vec<MapElement>> {
