@@ -66,7 +66,7 @@
     DefaultToHashStrFunc(Type) unsigned long DefaultKeyHashFuncName(Type)(Type t1) \
     {                                                                              \
         char *str = DefaultToHashStrFuncName(Type)(t1);                            \
-        unsigned long hash = HASH_FUNC(str);                                       \
+        unsigned long hash = HASH_FUNC((unsigned char *)str);                      \
         free(str);                                                                 \
         return hash;                                                               \
     }

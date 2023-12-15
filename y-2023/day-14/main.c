@@ -20,7 +20,7 @@ typedef CharMatrix *CharMatrixPtr;
 char *MatrixToStr(const CharMatrix *matrix);
 KeyHashFunc(CharMatrixPtr, MatrixToStr) 
 bool eqMatrix(const CharMatrix *m1, const CharMatrix *m2);
-DefHashMapType(CharMatrixPtr, DefaultKeyHashFuncName(CharMatrixPtr), eqMatrix, int, MatToIndexMap)
+DefHashMapType(CharMatrixPtr, DefaultKeyHashFuncName(CharMatrixPtr), eqMatrix, int, MatPtrToIndexMap)
 
 void cleanUpMatrix(CharMatrix *matrix)
 {
@@ -28,6 +28,7 @@ void cleanUpMatrix(CharMatrix *matrix)
     // printf("[Info] +-> Cleaning Matrix buffer at: 0x%llX\n", (ull)matrix->buffer);
     for (size_t i = 0; i < matrix->size; i++)
     {
+        // printf("[Info] +---> Cleaning Matrix buffer elem at: 0x%llX\n", (ull)&matrix->buffer[i]);
         charList_freeBuffer(&(matrix->buffer[i]));
     }
 
@@ -46,9 +47,9 @@ void parseInput(const char *filePath, CharMatrix *inputMatrix)
     size_t line = -1;
     while (fgets(buffer, 128, fileHandle) != NULL)
     {
-        charList *list = malloc(1 * sizeof(charList));
-        charList_initz(list);
-        CharMatrix_push(inputMatrix, *list);
+        charList list = {0};
+        charList_initz(&list);
+        CharMatrix_push(inputMatrix, list);
         line++;
         for (size_t i = 0; buffer[i] != '\0' && buffer[i] != '\n'; i++)
         {
@@ -131,9 +132,9 @@ void cloneMatrix(const CharMatrix *matrix, CharMatrix *clone)
 
     for (size_t i = 0; i < matrix->size; i++)
     {
-        charList *list = malloc(1 * sizeof(charList));
-        charList_initz(list);
-        CharMatrix_push(clone, *list);
+        charList list = {0};
+        charList_initz(&list);
+        CharMatrix_push(clone, list);
         for (size_t j = 0; j < matrix->buffer[i].size; j++)
         {
             charList_push(&(clone->buffer[i]), matrix->buffer[i].buffer[j]);
@@ -268,8 +269,8 @@ ull Part1(const CharMatrix *matrix)
 
 ull Part2(const CharMatrix *matrix)
 {
-    MatToIndexMap map = {0};
-    MatToIndexMap_initz(&map);
+    MatPtrToIndexMap map = {0};
+    MatPtrToIndexMap_initz(&map);
 
     CharMatrix clone = {0};
     cloneMatrix(matrix, &clone);
@@ -281,7 +282,7 @@ ull Part2(const CharMatrix *matrix)
         assert(newClone != NULL && "Out of memory");
         cloneMatrix(&clone, newClone);
 
-        MatToIndexMap_add(&map, newClone, 0);
+        MatPtrToIndexMap_add(&map, newClone, 0);
     }
 
     int cycles = 1000000000;
@@ -294,7 +295,7 @@ ull Part2(const CharMatrix *matrix)
         doCycle(&clone);
 
         int foundPrevIndex = 0;
-        if (MatToIndexMap_get(&map, &clone, &foundPrevIndex))
+        if (MatPtrToIndexMap_get(&map, &clone, &foundPrevIndex))
         {
             firstCycleStartIndex = foundPrevIndex;
             secondCycleStartIndex = i;
@@ -305,7 +306,7 @@ ull Part2(const CharMatrix *matrix)
         assert(newClone != NULL && "Out of memory");
         cloneMatrix(&clone, newClone);
 
-        MatToIndexMap_add(&map, newClone, i);
+        MatPtrToIndexMap_add(&map, newClone, i);
     }
 
     if (firstCycleStartIndex != 0 && secondCycleStartIndex != 0)
@@ -336,7 +337,7 @@ ull Part2(const CharMatrix *matrix)
         }
     }
 
-    MatToIndexMap_freeBuffers(&map);
+    MatPtrToIndexMap_freeBuffers(&map);
     cleanUpMatrix(&clone);
 
     return p2;
@@ -357,7 +358,7 @@ int main()
     printf("P1: %llu\n", p1);
     ull p2 = Part2(&matrix);
     printf("P2: %llu\n", p2);
-
+    
     cleanUpMatrix(&matrix);
     return 0;
 }
