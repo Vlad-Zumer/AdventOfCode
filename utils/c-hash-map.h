@@ -80,6 +80,9 @@
         return hash;                                          \
     }
 
+#define DefDefaultImplHashMapType(KeyType, ValueType, Name) \
+    DefHashMapType(KeyType, DefaultKeyHashFuncName(KeyType), DefaultEqFuncName(KeyType), ValueType, Name)
+
 #define DefHashMapType(KeyType, KeyHashFunc, KeyEqFunc, ValueType, Name)                                     \
     typedef struct                                                                                           \
     {                                                                                                        \
@@ -213,4 +216,5 @@
 
 // DefaultEqFunc(int)
 // DefaultKeyHashFunc(int)
+// DefDefaultImplHashMapType(int, int, IntToInt)
 // DefHashMapType(int, DefaultKeyHashFuncName(int), DefaultEqFuncName(int), int, IntToIntMap)
