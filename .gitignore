@@ -5,6 +5,9 @@
 **/test
 **/tests
 
+# out files
+**/out*[0-9].*
+
 # rust
 **/target/
 
