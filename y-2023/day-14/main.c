@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <errno.h>
 
 #define INIT_DA_BUFFER_CAP 101
 #include "../../utils/c-dynamic-array.h"
