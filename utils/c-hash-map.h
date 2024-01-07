@@ -62,13 +62,14 @@
 
 #define DefaultKeyHashFuncName(Type) hashFunc_##Type
 
-#define DefaultKeyHashFunc(Type)                                                   \
-    DefaultToHashStrFunc(Type) unsigned long DefaultKeyHashFuncName(Type)(Type t1) \
-    {                                                                              \
-        char *str = DefaultToHashStrFuncName(Type)(t1);                            \
-        unsigned long hash = HASH_FUNC((unsigned char *)str);                      \
-        free(str);                                                                 \
-        return hash;                                                               \
+#define DefaultKeyHashFunc(Type)                                   \
+    DefaultToHashStrFunc(Type)                                     \
+    unsigned long DefaultKeyHashFuncName(Type)(Type t1)            \
+    {                                                              \
+        char *str = DefaultToHashStrFuncName(Type)(t1);            \
+        unsigned long hash = HASH_FUNC((unsigned char *)str);      \
+        free(str);                                                 \
+        return hash;                                               \
     }
 
 #define KeyHashFunc(Type, MakeKeyToStr)                       \
