@@ -11,7 +11,7 @@ use std::{
 
 use self::numeric_traits::{NumericBase, SignedNumeric};
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NDVec<T, const N: usize>
 where
     T: NumericBase,
