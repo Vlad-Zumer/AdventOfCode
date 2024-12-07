@@ -6,7 +6,7 @@ from urllib.request import urlretrieve
 def ensurePackage(importName:str, packageName:str):
     try:
         __import__(importName)
-    except:
+    except ModuleNotFoundError:
         os.system("pip install "+packageName)
 
 ensurePackage("yaml", "pyyaml")

@@ -31,6 +31,7 @@ Use all languages supported by github language detection.
           <li> C
           <li> C#
           <li> C++
+          <li> FreeBASIC
           <li> Haskell
           <li> JavaScript
           <li> PowerShell
