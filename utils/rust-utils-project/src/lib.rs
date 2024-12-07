@@ -2,3 +2,4 @@
 pub mod nd_vec;
 pub mod vec_extensions;
 pub mod random;
+pub mod algorithms;
