@@ -5,10 +5,14 @@ temp/
 
 .**/
 
+# input files
+**/input.txt
+
 # test
 **/test.*
 **/test
 **/tests
+!**/test.txt
 
 # out files
 **/out.*
