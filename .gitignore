@@ -13,6 +13,8 @@ temp/
 # out files
 **/out.*
 **/out*[0-9].*
+**/out/
+**/output/
 
 # rust
 **/target/
