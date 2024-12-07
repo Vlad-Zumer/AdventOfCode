@@ -289,7 +289,7 @@
 * [ ] Pascal
 * [ ] Pawn
 * [ ] Pep8
-* [ ] Perl
+* [x] Perl
 * [ ] PicoLisp
 * [ ] PigLatin
 * [ ] Pike

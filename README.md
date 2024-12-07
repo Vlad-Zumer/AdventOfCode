@@ -34,6 +34,7 @@ Use all languages supported by github language detection.
           <li> FreeBASIC
           <li> Haskell
           <li> JavaScript
+          <li> Perl
           <li> PowerShell
           <li> Python
           <li> Ruby
