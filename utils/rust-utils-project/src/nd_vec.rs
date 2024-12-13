@@ -141,6 +141,10 @@ impl<T: NumericBase, const N: usize> NDVec<T, N> {
 }
 
 impl<T: SignedNumeric, const N: usize> NDVec<T, N> {
+    pub fn abs(&self) -> Self {
+        return self.map(|x| x.abs());
+    }
+
     fn private_sub(&self, rhs: &Self) -> Self {
         let it1 = (&self).arr.iter();
         let it2 = (&rhs).arr.iter();

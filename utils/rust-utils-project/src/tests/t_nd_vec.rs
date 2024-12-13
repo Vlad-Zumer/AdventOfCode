@@ -516,3 +516,21 @@ fn test_vector_div_assign() {
         );
     }
 }
+
+#[test]
+fn test_vector_abs() {
+    type TVec1 = NDVec<i16, 10>;
+
+    let arr = [-1, 2, 3, -4, 5, 6, -7, -8, -9, 10];
+    let abs_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let actual = TVec1::new(arr);
+    let expected = TVec1::new(abs_arr);
+
+    assert_eq!(
+        expected,
+        (&actual).abs(),
+        "Expected '{}' but got '{}'",
+        expected,
+        actual.abs()
+    );
+}
