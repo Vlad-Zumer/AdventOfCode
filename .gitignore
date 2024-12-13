@@ -13,6 +13,7 @@ temp/
 **/test
 **/tests
 !**/test.txt
+!utils/rust-utils-project/src/tests
 
 # out files
 **/out.*
