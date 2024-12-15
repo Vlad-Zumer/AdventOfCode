@@ -163,6 +163,19 @@ namespace Utils
         return str.substr(begin, end - begin + 1);
     }
 
+    vector<char> strToVec(const string &str)
+    {
+        vector<char> out = {};
+        size_t len = str.length();
+        out.reserve(len);
+        for (size_t i = 0; i < len; i++)
+        {
+            out.push_back(str[i]);
+        }
+
+        return out;
+    }
+
     template <typename A, typename B>
     vector<pair<A, B>> mapToVec(const map<A, B> &map)
     {

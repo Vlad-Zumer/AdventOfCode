@@ -159,7 +159,7 @@ namespace MathsUtil
     };
 
     template <class Old, class New, size_t size>
-    VecN<New, size> VecNConvert(const VecN<Old, size>& vec)
+    VecN<New, size> VecNConvert(const VecN<Old, size> &vec)
     {
         VecN<New, size> ret;
         for (size_t i = 0; i < size; i++)
