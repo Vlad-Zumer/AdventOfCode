@@ -11,23 +11,22 @@ namespace MathsUtil
     using namespace std;
 
     // N dim vector class
-    template<class T, size_t size>
+    template <class T, size_t size>
     class VecN
     {
     protected:
-
-        static_assert(is_arithmetic<T>::value,"Cannot make vector of non-arithmetic type");
+        static_assert(is_arithmetic<T>::value, "Cannot make vector of non-arithmetic type");
         T arr[size];
 
     public:
-
         size_t numCoord = size;
-        
-        T& operator[](size_t index) { return arr[index];}
-        
-        VecN<T,size> operator+(const VecN<T, size> &other) const
+
+        T &operator[](size_t index) { return arr[index]; }
+        const T &operator[](size_t index) const { return arr[index]; }
+
+        VecN<T, size> operator+(const VecN<T, size> &other) const
         {
-            VecN<T,size> newV;
+            VecN<T, size> newV;
             for (size_t i = 0; i < size; i++)
             {
                 newV.arr[i] = (arr[i] + other.arr[i]);
@@ -35,37 +34,37 @@ namespace MathsUtil
             return newV;
         }
 
-        VecN<T,size> operator-(const VecN<T, size> &other) const
+        VecN<T, size> operator-(const VecN<T, size> &other) const
         {
-            VecN<T,size> newV;
+            VecN<T, size> newV;
             for (size_t i = 0; i < size; i++)
             {
                 newV.arr[i] = (arr[i] - other.arr[i]);
             }
             return newV;
-        } 
-        
-        VecN<T,size> operator* (const T mul) const
+        }
+
+        VecN<T, size> operator*(const T mul) const
         {
-            VecN<T,size> newV;
+            VecN<T, size> newV;
             for (size_t i = 0; i < size; i++)
             {
                 newV.arr[i] = (arr[i] * mul);
             }
             return newV;
         }
-        
-        VecN<T,size> operator/ (const T div) const 
+
+        VecN<T, size> operator/(const T div) const
         {
-            VecN<T,size> newV;
+            VecN<T, size> newV;
             for (size_t i = 0; i < size; i++)
             {
-                newV.arr[i] = (arr[i]/div);
+                newV.arr[i] = (arr[i] / div);
             }
             return newV;
         }
 
-        bool operator==(const VecN<T,size> &other) const
+        bool operator==(const VecN<T, size> &other) const
         {
             bool equal = true;
             for (size_t i = 0; i < size; i++)
@@ -75,30 +74,30 @@ namespace MathsUtil
             return equal;
         }
 
-        bool operator!=(const VecN<T,size> &other) const
+        bool operator!=(const VecN<T, size> &other) const
         {
             return !((*this) == other);
         }
-        
-        friend ostream& operator<< (ostream& os, const VecN<T,size> vec)
+
+        friend ostream &operator<<(ostream &os, const VecN<T, size> vec)
         {
-            os<<"Vec:"<<" { ";
+            os << "Vec:" << " { ";
             for (size_t i = 0; i < size; i++)
             {
                 if (i + 1 == size)
                 {
-                    os<<vec.arr[i];
+                    os << vec.arr[i];
                 }
                 else
                 {
-                    os<<vec.arr[i]<<", ";
+                    os << vec.arr[i] << ", ";
                 }
             }
-            os<<" }";
+            os << " }";
 
             return os;
         }
-        
+
         VecN()
         {
             for (size_t i = 0; i < size; i++)
@@ -123,11 +122,11 @@ namespace MathsUtil
             {
                 arr[i++] = val;
             }
-        } 
+        }
 
-        T get(const size_t index) const {return arr[index];}
+        T get(const size_t index) const { return arr[index]; }
 
-        vector<T> toStdVector()
+        vector<T> toStdVector() const
         {
             vector<T> ret(size);
             for (size_t i = 0; i < size; i++)
@@ -137,8 +136,8 @@ namespace MathsUtil
             return ret;
         }
 
-        template<class D, typename std::enable_if<std::is_arithmetic<D>::value>::type* = nullptr>
-        D lengthSq()
+        template <class D, typename std::enable_if<std::is_arithmetic<D>::value>::type * = nullptr>
+        D lengthSq() const
         {
             D len = 0;
             for (size_t i = 0; i < size; i++)
@@ -147,23 +146,22 @@ namespace MathsUtil
             }
             return len;
         }
-        
-        float lengthf()
+
+        float lengthf() const
         {
             return sqrtf(lengthSq<float>());
         }
 
-        double length()
+        double length() const
         {
             return sqrt(lengthSq<double>());
         }
-
     };
 
-    template<class Old, class New, size_t size>
-    VecN<New,size> VecNConvert (VecN<Old, size> vec)
+    template <class Old, class New, size_t size>
+    VecN<New, size> VecNConvert(const VecN<Old, size>& vec)
     {
-        VecN<New,size> ret;
+        VecN<New, size> ret;
         for (size_t i = 0; i < size; i++)
         {
             ret[i] = (New)vec[i];
@@ -171,24 +169,24 @@ namespace MathsUtil
         return ret;
     }
 
+    using Vec2 = VecN<int, 2>;
+    using Vec2l = VecN<long, 2>;
+    using Vec2ll = VecN<long long, 2>;
+    using Vec2f = VecN<float, 2>;
 
-    using Vec2 = VecN<int,2>;
-    using Vec2l = VecN<long,2>;
-    using Vec2ll = VecN<long long,2>;
-    using Vec2f = VecN<float,2>;
-    
-    using Vec3 = VecN<int,3>;
-    using Vec3l = VecN<long,3>;
-    using Vec3ll = VecN<long long,3>;
-    using Vec3f = VecN<float,3>;
+    using Vec3 = VecN<int, 3>;
+    using Vec3l = VecN<long, 3>;
+    using Vec3ll = VecN<long long, 3>;
+    using Vec3f = VecN<float, 3>;
 
 }
 
-namespace std {
+namespace std
+{
     template <class T, size_t size>
-    struct hash<MathsUtil::VecN<T,size>>
+    struct hash<MathsUtil::VecN<T, size>>
     {
-        size_t operator()(const MathsUtil::VecN<T,size>& v) const
+        size_t operator()(const MathsUtil::VecN<T, size> &v) const
         {
             // Compute individual hash values for first,
             // second and third and combine them using XOR
@@ -198,7 +196,7 @@ namespace std {
             {
                 outVal ^= (size_t)v.get(i);
                 outVal ^= outVal << (i % 5);
-                outVal ^= outVal >> ((i/2)%7);
+                outVal ^= outVal >> ((i / 2) % 7);
             }
             return outVal;
         }
