@@ -1,0 +1,36 @@
+Ax+By=C
+Mx+Ny=P
+
+results:
+---------
+x = (C-By)/A
+y = (PA-MC)/(AN-BM)
+
+get x:
+---------
+Ax+By=C
+x = (C-By)/A
+
+get y:
+----------
+Mx+Ny=P
+M((C-By)/A) + Ny = P
+(MC-BMy)/A + Ny = P
+(MC-BMy) + ANy = AP
+MC + (-BM + AN)y = AP
+y = (PA - MC)/(AN-BM)
+
+complications
+----------
+if (AN - BM) == 0 =>
+    one eq is the scaled version of the other
+    calculate scale factor =>
+        SC1 = A / gcd(A,M)
+        SC2 = M / gcd(A,M)
+    scale P to P' and C to C' by the scale factor =>
+        C' = C / SC1
+        P' = P / SC2
+    if P' == C' => infinite solutions
+    else => 0 solutions
+else => 1 solutions
+
