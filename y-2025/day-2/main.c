@@ -10,7 +10,7 @@
 
 #define MAX_FILE_SIZE 1024
 #define MAX_NUM_PAIRS 100
-#define MAX_NUM_WIDTH 16
+#define MAX_NUM_WIDTH 23 // align reads for len as well
 
 typedef struct NumberRepr
 {
@@ -28,16 +28,6 @@ NumberRepr make_num_repr(const char *str)
         ret_val.repr[i] = str[i];
     }
     assert(str[i] == 0);
-    return ret_val;
-}
-
-uint64_t repr2int(const NumberRepr num)
-{
-    uint64_t ret_val = 0;
-    for (size_t i = 0; i < num.len; i++)
-    {
-        ret_val = ret_val * 10 + (num.repr[i] - '0');
-    }
     return ret_val;
 }
 
@@ -182,93 +172,134 @@ void read_file(const char *file_name, NumberPair *out_buf, size_t *out_buf_len)
     (*out_buf_len)++;
 }
 
-bool is_doubled_seq(const NumberRepr n)
+NumberRepr get_prefix(const NumberRepr a, const size_t prefix_size)
 {
-    if (n.len % 2 != 0)
+    assert(prefix_size <= MAX_NUM_WIDTH);
+    assert(a.len >= prefix_size);
+
+    NumberRepr ret_val = {0};
+    ret_val.len = prefix_size;
+    for (size_t i = 0; i < prefix_size; i++)
+    {
+        ret_val.repr[i] = a.repr[i];
+    }
+    return ret_val;
+}
+
+NumberRepr repeat_prefix(const NumberRepr prefix, const size_t times)
+{
+    assert((prefix.len * times) <= MAX_NUM_WIDTH);
+    NumberRepr ret_val = {0};
+    ret_val.len = prefix.len * times;
+
+    for (size_t i = 0; i < times; i++)
+    {
+        for (size_t p_idx = 0; p_idx < prefix.len; p_idx++)
+        {
+            ret_val.repr[i * prefix.len + p_idx] = prefix.repr[p_idx];
+        }
+    }
+
+    return ret_val;
+}
+
+NumberRepr get_min_of_len(const size_t len)
+{
+    NumberRepr ret_val = repeat_prefix(make_num_repr("0"), len);
+    ret_val.repr[0] = '1';
+    return ret_val;
+}
+
+bool is_repeated_seq_ex(const NumberRepr n, const size_t parts_num)
+{
+    if (n.len % parts_num != 0)
     {
         return false;
     }
 
-    const size_t mid = n.len / 2;
-    for (size_t i = 0; i < mid; i++)
-    {
-        if (n.repr[i] != n.repr[mid + i])
-        {
-            return false;
-        }
-    }
+    const size_t seq_size = n.len / parts_num;
+    const NumberRepr prefix = get_prefix(n, seq_size);
+    const NumberRepr rep_seq = repeat_prefix(prefix, parts_num);
 
-    return true;
+    return (num_rep_cmp(n, rep_seq) == 0);
 }
 
-NumberRepr get_next_dseq_num(const NumberRepr prev)
+bool is_repeated_seq(const NumberRepr n)
 {
+    for (size_t parts = n.len; parts > 1; parts--)
+    {
+        if (is_repeated_seq_ex(n, parts))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+NumberRepr get_next_rseq_num_ex(const NumberRepr n, const size_t parts_num)
+{
+    const size_t seq_size = n.len / parts_num;
+    if (n.len % parts_num != 0)
+    {
+        const NumberRepr prefix = get_min_of_len(seq_size + 1);
+        return repeat_prefix(prefix, parts_num);
+    }
+
+    const NumberRepr prefix = get_prefix(n, seq_size);
+    const NumberRepr try1 = repeat_prefix(prefix, parts_num);
+
+    if (num_rep_cmp(n, try1) < 0)
+    {
+        return try1;
+    }
+
+    const NumberRepr inc_prefix = num_repr_add(prefix, make_num_repr("1"));
+    const NumberRepr try2 = repeat_prefix(inc_prefix, parts_num);
+    assert(num_rep_cmp(n, try2) < 0);
+
+    return try2;
+}
+
+NumberRepr get_next_rseq_num(const NumberRepr n)
+{
+    if (n.len == 1)
+    {
+        // single digit -> 11 is the next repeated sequence number
+        return make_num_repr("11");
+    }
+
     NumberRepr ret_val = {0};
-    if (prev.len % 2 == 1)
+    for (size_t parts = n.len; parts > 1; parts--)
     {
-        // odd number of digits
-        ret_val.len = prev.len + 1;
-        const size_t mid = ret_val.len / 2;
-        ret_val.repr[0] = '1';
-        ret_val.repr[mid] = '1';
-
-        for (size_t i = 1; i < mid; i++)
+        const NumberRepr next = get_next_rseq_num_ex(n, parts);
+        if (num_rep_cmp(n, next) < 0)
         {
-            ret_val.repr[i] = '0';
-            ret_val.repr[i + mid] = '0';
-        }
+            if (ret_val.len == 0)
+            {
+                ret_val = next;
+            }
 
-        return ret_val;
-    }
-
-    // make a doubled sequence number from the previous' first half
-    ret_val.len = prev.len;
-    const size_t mid = ret_val.len / 2;
-    for (size_t i = 0; i < mid; i++)
-    {
-        ret_val.repr[i] = prev.repr[i];
-        ret_val.repr[i + mid] = prev.repr[i];
-    }
-
-    // new doubled sequence number is larger than prev => is next
-    if (num_rep_cmp(ret_val, prev) > 0)
-    {
-        return ret_val;
-    }
-
-    // find the first digit to increase
-    size_t inc_index;
-    for (inc_index = mid - 1; inc_index >= 0; inc_index--)
-    {
-        if (ret_val.repr[inc_index] < '9')
-        {
-            break;
+            if (num_rep_cmp(ret_val, next) > 0)
+            {
+                ret_val = next;
+            }
         }
     }
 
-    // need to check '<= mid' because unsigned-ness
-    if (inc_index <= mid && inc_index >= 0)
+    // check for parts in between
+    for (size_t lower_len = n.len + 1; lower_len <= ret_val.len; lower_len++)
     {
-        ret_val.repr[inc_index]++;
-        ret_val.repr[inc_index + mid]++;
-        for (size_t i = inc_index + 1; i < mid; i++)
+        const NumberRepr min = get_min_of_len(lower_len);
+        for (size_t parts = min.len; parts > 1; parts--)
         {
-            ret_val.repr[i] = '0';
-            ret_val.repr[i + mid] = '0';
+            const NumberRepr next = get_next_rseq_num_ex(min, parts);
+            if (num_rep_cmp(n, next) < 0 &&
+                num_rep_cmp(ret_val, next) > 0)
+            {
+                ret_val = next;
+            }
         }
-        return ret_val;
-    }
-
-    // prev number is all 9s
-    ret_val.len += 2;
-    const size_t new_mid = ret_val.len / 2;
-    ret_val.repr[0] = '1';
-    ret_val.repr[new_mid] = '1';
-
-    for (size_t i = 1; i < new_mid; i++)
-    {
-        ret_val.repr[i] = '0';
-        ret_val.repr[i + new_mid] = '0';
     }
 
     return ret_val;
@@ -279,32 +310,53 @@ void p1(const NumberPair *pairs, const size_t pairs_len)
     NumberRepr sol_rep = make_num_repr("0");
     for (size_t pair_idx = 0; pair_idx < pairs_len; pair_idx++)
     {
-        if (is_doubled_seq(pairs[pair_idx].lo))
+        if (is_repeated_seq_ex(pairs[pair_idx].lo, 2))
         {
             sol_rep = num_repr_add(sol_rep, pairs[pair_idx].lo);
         }
 
-        NumberRepr curr = get_next_dseq_num(pairs[pair_idx].lo);
+        NumberRepr curr = get_next_rseq_num_ex(pairs[pair_idx].lo, 2);
         while (num_rep_cmp(curr, pairs[pair_idx].hi) <= 0)
         {
             sol_rep = num_repr_add(sol_rep, curr);
-            curr = get_next_dseq_num(curr);
+            curr = get_next_rseq_num_ex(curr, 2);
         }
     }
 
     printf("P1: %s\n", sol_rep.repr);
 }
 
-// run with "gcc main.c -o main.exe -std=c99 && ./main.exe"
+void p2(const NumberPair *pairs, const size_t pairs_len)
+{
+    NumberRepr sol_rep = make_num_repr("0");
+    for (size_t pair_idx = 0; pair_idx < pairs_len; pair_idx++)
+    {
+        if (is_repeated_seq(pairs[pair_idx].lo))
+        {
+            sol_rep = num_repr_add(sol_rep, pairs[pair_idx].lo);
+        }
+
+        NumberRepr curr = get_next_rseq_num(pairs[pair_idx].lo);
+        while (num_rep_cmp(curr, pairs[pair_idx].hi) <= 0)
+        {
+            sol_rep = num_repr_add(sol_rep, curr);
+            curr = get_next_rseq_num(curr);
+        }
+    }
+
+    printf("P2: %s\n", sol_rep.repr);
+}
+
+// run with "gcc main.c -o main.exe -std=c99 -Wall -Wpedantic && ./main.exe"
 int main(int argc, char *argv[])
 {
     NumberPair pairs[MAX_NUM_PAIRS];
     size_t pairs_len;
 
-    read_file("test.txt", pairs, &pairs_len);
-    // read_file("input.txt", pairs, &pairs_len);
+    // read_file("test.txt", pairs, &pairs_len);
+    read_file("input.txt", pairs, &pairs_len);
     p1(pairs, pairs_len);
+    p2(pairs, pairs_len);
 
-    printf("OK");
     return 0;
 }
